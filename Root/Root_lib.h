@@ -74,11 +74,6 @@ void add_word(uint32_t a[], uint32_t b[], uint32_t result[], int len )
 	{
 		result[i] = a[i] + b[i] + carry;
 		carry = (a[i] > result[i] || b[i] > result[i]) ? 1 : 0;
-		// if (a[i] + b[i] + carry >= 4294967296)
-		// {
-		// 	carry = 1;
-		// }
-		// else carry = 0;
 	}
 }
 
@@ -127,14 +122,7 @@ void printAsBit(uint32_t w_number[], int n )
 		std::cout << std::bitset<32>(w_number[i]);
 	}
 }
-//void printAsDecimal(uint32_t number[], int n)
-//{
-	//unsigned long long int merde = 0;
 
-//	merde = number[1] * 18446744073709551615 + (number[3] + (4294967296 * number[2]));
-//	cout << merde;
-	
-//}
 void fillZeros(uint32_t a[], int n)
 {
 	for (int i = 0; i < n; i++)
@@ -147,8 +135,6 @@ bool equals(uint32_t a[], uint32_t b[], int len )
 {
 	for (int i = 0; i < len; i++)
 	{
-	//	if (a[i] == b[i])
-			//return true;
 		if (a[i] != b[i])
 			return false;
 	}
@@ -179,16 +165,10 @@ bool isBigger(uint32_t a[], uint32_t b[], int len )
 			{
 				return false;
 			}
-		
 	}
-	
 }
 void root(uint32_t input[], uint32_t result[], int n)
 {
-
-
-	//one[0] = 1L << 30;
-
 	for (int i = 0; i < n; i++)
 	{
 		if (input[i] != 0)
@@ -224,7 +204,6 @@ void root(uint32_t input[], uint32_t result[], int n)
 		}
 		shiftR_word(one, n);
 		shiftR_word(one, n);
-		//printAsBit(one,cout,n);
 	}
 }
 long autoTest(uint32_t array[], uint32_t result[], long numberOfTests, int n)
@@ -246,12 +225,13 @@ long autoTest(uint32_t array[], uint32_t result[], long numberOfTests, int n)
 		fillZeros(x, word_len);
 
 	}
+
+	cout << "Time: " << resultTime << endl;
 	return resultTime;
 }
 
 string convert(uint32_t array[], int n, string result)
 {
-	//result = result_str;
 	std::stringstream ss;
 	for (int i = 0; i <= sizeof(array) - 1; i++)
 	{
@@ -261,6 +241,11 @@ string convert(uint32_t array[], int n, string result)
 	cout << result;
 	result_str = result;
 	return result_str;
+}
+
+void compareResults()
+{
+
 }
 
 
@@ -343,69 +328,3 @@ string square(string num1, int base = 10)
 #endif /* ROOT_LIB */
 
 
-
-
-// void shiftR_word(uint32_t w_number[], int n)
-// {
-//     // n - how many words
-//     //(n*32b word) >> 1
-//     //int n = sizeof(w_number)/sizeof(*w_number);
-//     //cout << endl << sizeof(w_number) << "*" << sizeof(*w_number) << endl;
-//     bool* odd = new bool[n-1];
-//
-//       for (size_t i = 0; i <= n-1; i++)
-//         if( w_number[i] & 1 ) odd[i]=true;
-//
-//       for (size_t i = 0; i < n; i++)
-//         w_number[i] >>= 1;
-//
-//       for (size_t i = 0; i <= n-1; i++)
-//         if(odd[i]) w_number[i+1] = w_number[i+1] | 1 << 31;
-//
-//       delete[] odd;
-//
-// }
-//
-// void printAsBit(uint32_t w_number[], int n)
-// {
-//   std::cout << std::endl;
-//
-//   for (size_t i = 0; i < n; i++)
-//   {
-//     std::cout << std::bitset<32>(w_number[i]);
-//   }
-// }
-//
-//
-// bool equals(uint32_t a[],uint32_t b[] ,int len)
-// {
-//   for (size_t i = 0; i < len; i++)
-//   {
-//     if (a[i]!=b[i])
-//       return false;
-//   }
-//   return true;
-// }
-//
-// bool isZero(uint32_t a[], int len)
-// {
-//   for (size_t i = 0; i < len; i++)
-//   {
-//     if (a[i]!=0)
-//       return false;
-//   }
-//   return true;
-// }
-//
-// bool isBigger(uint32_t a[],uint32_t b[] ,int len)
-// {
-//     for (size_t i = 0; i < len; i++)
-//     {
-//       if (a[i]>b[i])
-//       {
-//         //cout << "\n" << a[i] << " " << b[i];
-//         return true;
-//       }
-//     }
-//     return false;
-// }
