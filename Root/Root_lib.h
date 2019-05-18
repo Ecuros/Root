@@ -175,7 +175,6 @@ void root(uint32_t input[], uint32_t result[], int n)
 			one[i] = 1L << 30;
 
 	}
-
 	while (isBigger(one, input, n))
 	{
 		shiftR_word(one, n);
@@ -205,6 +204,20 @@ void root(uint32_t input[], uint32_t result[], int n)
 		shiftR_word(one, n);
 		shiftR_word(one, n);
 	}
+	printAsBit(result,n);
+	cout << endl;
+}
+string convert(uint32_t array[], int n, string result)
+{
+	std::stringstream ss;
+	for (int i = 0; i <= sizeof(array) - 1; i++)
+	{
+		ss << array[i];
+	}
+	ss >> result;
+	cout << result;
+	result_str = result;
+	return result_str;
 }
 long autoTest(uint32_t array[], uint32_t result[], long numberOfTests, int n)
 {
@@ -223,25 +236,15 @@ long autoTest(uint32_t array[], uint32_t result[], long numberOfTests, int n)
 		fillZeros(buff, word_len);
 		fillZeros(empty_arr, word_len);
 		fillZeros(x, word_len);
-
 	}
-
+	string s;
+	cout << endl << endl;
+	convert(array, sizeof(array), s);
 	cout << "Time: " << resultTime << endl;
 	return resultTime;
 }
 
-string convert(uint32_t array[], int n, string result)
-{
-	std::stringstream ss;
-	for (int i = 0; i <= sizeof(array) - 1; i++)
-	{
-		ss << array[i];
-	}
-	ss >> result;
-	cout << result;
-	result_str = result;
-	return result_str;
-}
+
 
 void compareResults()
 {
