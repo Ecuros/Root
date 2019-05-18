@@ -5,9 +5,62 @@
 #include <stdint.h>
 #include <vector>
 #include <bitset>
+#include <time.h>
+#include <chrono>
+#include <stdlib.h>
+#include <inttypes.h>
+#include <ctime>
+#include <sstream>
 using namespace std;
 
-void copy(uint32_t a[], uint32_t b[], int n = 4)
+const unsigned int word_len = 64;
+uint32_t one[word_len] = { 0 };
+uint32_t var[word_len] = { 0 };
+uint32_t buff[word_len] = { 0 };
+uint32_t empty_arr[word_len] = { 0 };
+uint32_t x[word_len] = { 0 };
+uint32_t result[word_len] = { 0};
+string result_str;
+
+
+std::chrono::high_resolution_clock::time_point begTime;
+std::chrono::high_resolution_clock::time_point endTime;
+
+
+void timeStart()
+{
+	begTime = std::chrono::high_resolution_clock::now();
+}
+
+void timeStop()
+{
+	endTime = std::chrono::high_resolution_clock::now();
+}
+
+long execTime()
+{
+	return std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - begTime).count();
+}
+
+void randomizer_init()
+{
+	std::srand(std::time(nullptr));
+
+}
+void randomizer(uint32_t array[], int n)
+{
+
+	for (size_t i = 0; i < n; i++)
+	{
+		array[i] = std::rand();
+	}
+
+}
+
+
+
+
+void copy(uint32_t a[], uint32_t b[], int n )
 {
 	for (int i = 0; i < n; i++)
 	{
@@ -15,22 +68,23 @@ void copy(uint32_t a[], uint32_t b[], int n = 4)
 	}
 }
 
-void add_word(uint32_t a[], uint32_t b[], uint32_t result[], int len = 4)
+void add_word(uint32_t a[], uint32_t b[], uint32_t result[], int len )
 {
 	int carry = 0;
-
 
 	for (int i = len - 1; i >= 0; i--)
 	{
 		result[i] = a[i] + b[i] + carry;
 		carry = (a[i] > result[i] || b[i] > result[i]) ? 1 : 0;
-		//cout << " "  << result[i] << " * " << carry;
+		// if (a[i] + b[i] + carry >= 4294967296)
+		// {
+		// 	carry = 1;
+		// }
+		// else carry = 0;
 	}
-
-
 }
 
-void subtract_word(uint32_t a[], uint32_t b[], uint32_t result[], int len = 5)
+void subtract_word(uint32_t a[], uint32_t b[], uint32_t result[], int len )
 {
 	int carry = 0;
 	for (int i = len - 1; i >= 0; i--)
@@ -47,7 +101,7 @@ void subtract_word(uint32_t a[], uint32_t b[], uint32_t result[], int len = 5)
 	}
 }
 
-void shiftR_word(uint32_t array[], int n = 4)
+void shiftR_word(uint32_t array[], int n )
 {
 
 	{
@@ -64,66 +118,11 @@ void shiftR_word(uint32_t array[], int n = 4)
 				array[i] = array[i] | (array[i - 1] & 0x1) << 31;
 		}
 	}
-	 //n - how many words
-	//(n*32b word) >> 1
-
-	/* bool* odd = new bool[n];
 	
-	   for (int i = 0; i < n; i++)
-	   {
-	     if(array[i] & 1 )
-	       odd[i]=true;
-	    else
-			odd[i]=false;
-	   }
-	
-	
-   for (int i = 0; i < n; i++)
-	   array[i] >>= 1;
-	
-	   for (int i = 0; i < n-1; i++)
-	   {
-	    if(odd[i])
-		  {
-	    // array[i+1] = array[i+1] | 1 << 31;
-			array[i+1] = (1 << 31) | array[i+1];
-			}
-		}
-	
-	 delete[] odd;
-	 
-	 
-/*	for (int i = 0; i < 4; i++)	
-	{
-		array[i] = array[i] >> 1;
-
-		if (i < 3)
-		{
-			if (i != 0)
-			{
-				unsigned int bottom_bit = (array[i + 1] & 0x1) << 31;
-				array[i] = array[i] | bottom_bit;
-			}
-		}
-	}*/
 }
 
 
-/*void shiftR_word( uint32_t array [], size_t k =1)
-{	
-	uint32_t a = array[3];
-	uint32_t b = array[2];
-	uint32_t c = array[1];
-	uint32_t d = array[0];
-	
-	{
-		d = (c << (32 - k)) | (d >> k); \
-			c = (b << (32 - k)) | (c >> k); \
-			b = (a << (32 - k)) | (b >> k); \
-			a = (a >> k);
-	}
-}*/
-void printAsBit(uint32_t w_number[], int n = 4)
+void printAsBit(uint32_t w_number[], int n )
 {
 	std::cout << std::endl;
 
@@ -132,8 +131,23 @@ void printAsBit(uint32_t w_number[], int n = 4)
 		std::cout << std::bitset<32>(w_number[i]);
 	}
 }
+//void printAsDecimal(uint32_t number[], int n)
+//{
+	//unsigned long long int merde = 0;
 
-bool equals(uint32_t a[], uint32_t b[], int len = 4)
+//	merde = number[1] * 18446744073709551615 + (number[3] + (4294967296 * number[2]));
+//	cout << merde;
+	
+//}
+void fillZeros(uint32_t a[], int n)
+{
+	for (int i = 0; i < n; i++)
+	{
+		a[i] = 0;
+	}
+}
+
+bool equals(uint32_t a[], uint32_t b[], int len )
 {
 	for (int i = 0; i < len; i++)
 	{
@@ -145,7 +159,7 @@ bool equals(uint32_t a[], uint32_t b[], int len = 4)
 	return true;
 }
 
-bool isZero(uint32_t a[], int len = 4)
+bool isZero(uint32_t a[], int len )
 {
 	for (int i = 0; i < len; i++)
 	{
@@ -156,7 +170,7 @@ bool isZero(uint32_t a[], int len = 4)
 	return true;
 }
 
-bool isBigger(uint32_t a[], uint32_t b[], int len = 4)
+bool isBigger(uint32_t a[], uint32_t b[], int len )
 {
 	for (int i = 0; i < len; i++)
 	{
@@ -171,18 +185,94 @@ bool isBigger(uint32_t a[], uint32_t b[], int len = 4)
 			}
 		
 	}
-	//return true;
-	/*if (equals(a, b, 4))
+	
+}
+void root(uint32_t input[], uint32_t result[], int n)
+{
+
+
+	//one[0] = 1L << 30;
+
+	for (int i = 0; i < n; i++)
 	{
-		return false;
-	}*/
+		if (input[i] != 0)
+			one[i] = 1L << 30;
+
+	}
+
+	while (isBigger(one, input, n))
+	{
+		shiftR_word(one, n);
+		shiftR_word(one, n);
+	}
+
+	while (!isZero(one, n))
+	{
+		copy(empty_arr, var, n);		//zerowanie var
+		add_word(result, one, var, n); // var = result + one
+
+		if (isBigger(input, var, n) || equals(input, var, n))
+		{
+			copy(empty_arr, buff, n);			//zerowanie buff
+			subtract_word(input, var, buff, n + 1);
+			copy(buff, input, n);				//input -=var
+			shiftR_word(result, n);
+			copy(empty_arr, x, n);		//	zerowanie x
+
+			add_word(result, one, x, n);
+			copy(x, result, n);
+		}
+		else
+		{
+			shiftR_word(result, n);
+		}
+		shiftR_word(one, n);
+		shiftR_word(one, n);
+		//printAsBit(one,cout,n);
+	}
+}
+long autoTest(uint32_t array[], uint32_t result[], long numberOfTests, int n)
+{
+	long resultTime = 0;
+
+	for (size_t i = 0; i < numberOfTests; i++)
+	{
+		randomizer(array, n);
+		timeStart();
+		root(array, result, n);
+		timeStop();
+		resultTime += execTime();
+
+		fillZeros(one, word_len);
+		fillZeros(var, word_len);
+		fillZeros(buff, word_len);
+		fillZeros(empty_arr, word_len);
+		fillZeros(x, word_len);
+
+	}
+	return resultTime;
+}
+
+string convert(uint32_t array[], int n, string result)
+
+{
+	//result = result_str;
+	std::stringstream ss;
+	for (int i = 0; i <= sizeof(array) - 1; i++)
+	{
+		ss << array[i];
+	}
+	
+	ss >> result;
+	cout << result;
+	result_str = result;
+	return result_str;
 }
 
 
-
-string square(string num1, int base = 2)
+string square(string num1, int base = 10)
 {
-
+	num1 = result_str;
 	string num2 = num1;
 	int n1 = num1.size();
 	int n2 = num2.size();
@@ -250,6 +340,7 @@ string square(string num1, int base = 2)
 	while (i >= 0)
 		s += std::to_string(result[i--]);
 
+	cout << endl << "square" << " "<<s;
 	return s;
 }
 
