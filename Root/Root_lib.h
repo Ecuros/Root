@@ -49,12 +49,10 @@ void randomizer_init()
 }
 void randomizer(uint32_t array[], int n)
 {
-
 	for (size_t i = 0; i < n; i++)
 	{
 		array[i] = std::rand();
 	}
-
 }
 
 
@@ -103,7 +101,6 @@ void subtract_word(uint32_t a[], uint32_t b[], uint32_t result[], int len )
 
 void shiftR_word(uint32_t array[], int n )
 {
-
 	{
 		if (n == 0)
 			return;
@@ -118,7 +115,6 @@ void shiftR_word(uint32_t array[], int n )
 				array[i] = array[i] | (array[i - 1] & 0x1) << 31;
 		}
 	}
-	
 }
 
 
@@ -254,7 +250,6 @@ long autoTest(uint32_t array[], uint32_t result[], long numberOfTests, int n)
 }
 
 string convert(uint32_t array[], int n, string result)
-
 {
 	//result = result_str;
 	std::stringstream ss;
@@ -262,7 +257,6 @@ string convert(uint32_t array[], int n, string result)
 	{
 		ss << array[i];
 	}
-	
 	ss >> result;
 	cout << result;
 	result_str = result;
