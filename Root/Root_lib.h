@@ -252,7 +252,7 @@ void compareResults()
 }
 
 
-string square(string num1, int base = 10)
+string square(string num1, string &s, int base = 10)
 {
 	num1 = result_str;
 	string num2 = num1;
@@ -318,11 +318,11 @@ string square(string num1, int base = 10)
 		return "0";
 
 	// generate the result string
-	string s = "";
+	
 	while (i >= 0)
 		s += std::to_string(result[i--]);
 
-	cout << endl << "square" << " "<<s;
+	cout << endl << "Square: " << s;
 	return s;
 }
 
